@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CineScore — Movie Rating Intelligence</title>
+  <meta name="description" content="CineScore predicts movie ratings using a trained machine-learning model." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#08090c;--panel:#101218;--panel2:#151820;--line:#262b35;--text:#f4f5f7;--muted:#8e96a5;--gold:#f4c95d;--gold2:#ffdf82;--danger:#ff6b6b;--green:#65d6a1}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 75% -10%,#312815 0,transparent 35%),var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,black,transparent 80%)}
+    .shell{max-width:1220px;margin:auto;padding:0 28px 70px}.nav{height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}.brand{display:flex;align-items:center;gap:12px;font-family:'Space Grotesk';font-weight:700;font-size:20px}.brand-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--gold),#8e651b);display:grid;place-items:center;color:#111;font-size:18px;box-shadow:0 0 28px rgba(244,201,93,.15)}
+    .status{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}.dot.off{background:var(--danger);box-shadow:none}
+    .hero{padding:70px 0 44px;max-width:850px}.eyebrow{color:var(--gold);font-size:12px;letter-spacing:2.2px;text-transform:uppercase;font-weight:700}.hero h1{font:700 clamp(44px,7vw,78px)/.95 'Space Grotesk';letter-spacing:-4px;margin:16px 0 18px}.hero h1 span{color:var(--gold)}.hero p{font-size:18px;line-height:1.7;color:var(--muted);max-width:680px;margin:0}
+    .layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.8fr);gap:20px;align-items:start}.card{background:linear-gradient(145deg,rgba(22,24,31,.94),rgba(13,15,20,.96));border:1px solid var(--line);border-radius:22px;padding:26px;box-shadow:0 18px 60px rgba(0,0,0,.22)}.card h2{font:600 19px 'Space Grotesk';margin:0 0 6px}.sub{font-size:13px;color:var(--muted);margin-bottom:24px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}.field{display:flex;flex-direction:column;gap:8px}.field.full{grid-column:1/-1}label{font-size:12px;color:#b6bdc9;font-weight:600;letter-spacing:.4px}.input,select{width:100%;background:#0c0f14;border:1px solid #2b303b;color:var(--text);border-radius:12px;padding:13px 14px;font:inherit;outline:none;transition:.2s}.input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(244,201,93,.08)}.hint{font-size:11px;color:#687181}.genres{display:flex;flex-wrap:wrap;gap:8px}.genre{border:1px solid #2a303a;background:#0c0f14;color:#aeb5c1;border-radius:999px;padding:8px 11px;font-size:12px;cursor:pointer;user-select:none;transition:.18s}.genre.active{background:rgba(244,201,93,.12);border-color:var(--gold);color:var(--gold2)}
+    .checkrow{display:flex;gap:10px;align-items:center;color:#c4cad4;font-size:13px}.checkrow input{accent-color:var(--gold);width:16px;height:16px}.actions{display:flex;gap:10px;margin-top:24px}.btn{border:0;border-radius:13px;padding:14px 18px;font:700 14px 'DM Sans';cursor:pointer}.primary{background:var(--gold);color:#101114;flex:1}.primary:hover{background:var(--gold2)}.secondary{background:#1b1f27;color:#c8ced7;border:1px solid #303642}.secondary:hover{background:#232832}
+    .result{position:sticky;top:20px;min-height:460px;display:flex;flex-direction:column}.result-top{display:flex;justify-content:space-between;align-items:center}.badge{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;border:1px solid #343a45;color:#858e9d;padding:7px 9px;border-radius:999px}.score-wrap{text-align:center;padding:52px 10px 32px}.score{font:700 94px/.9 'Space Grotesk';letter-spacing:-5px;color:var(--gold)}.score small{font:600 22px 'DM Sans';color:#687181;letter-spacing:0}.stars{color:var(--gold);font-size:25px;letter-spacing:4px;margin:15px 0}.rating-label{text-transform:uppercase;letter-spacing:2px;font-size:10px;color:#717987}.result-line{height:1px;background:#242934}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.stat{background:#0c0f14;border:1px solid #202630;border-radius:13px;padding:13px}.stat b{display:block;font:600 15px 'Space Grotesk';margin-bottom:4px}.stat span{font-size:11px;color:#747d8b}.empty{flex:1;display:grid;place-items:center;text-align:center;color:#707988;padding:50px}.empty .film{font-size:42px;margin-bottom:14px}.loader{display:none}.loading .loader{display:inline-block}.loading .normal{display:none}.loader:after{content:"";display:inline-block;width:13px;height:13px;border:2px solid #444;border-top-color:#111;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px}@keyframes spin{to{transform:rotate(360deg)}}
+    .section{margin-top:20px}.feature-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.feature{background:#0d1015;border:1px solid #202630;border-radius:14px;padding:17px}.feature strong{display:block;font:600 16px 'Space Grotesk';margin-bottom:5px}.feature span{font-size:12px;color:#737c8b;line-height:1.5}.history{display:flex;flex-direction:column;gap:9px}.history-item{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:#0d1015;border:1px solid #202630;border-radius:12px}.history-item .name{font-size:12px;color:#b9c0ca}.history-item b{color:var(--gold);font-family:'Space Grotesk'}footer{text-align:center;color:#565e6b;font-size:11px;margin-top:50px}
+    @media(max-width:900px){.layout{grid-template-columns:1fr}.result{position:relative;top:auto}.feature-list{grid-template-columns:1fr}.hero{padding-top:48px}.hero h1{letter-spacing:-2px}}
+    @media(max-width:600px){.shell{padding:0 16px 50px}.nav{height:70px}.grid{grid-template-columns:1fr}.field.full{grid-column:auto}.card{padding:20px}.score{font-size:75px}.hero p{font-size:15px}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <nav class="nav"><div class="brand"><div class="brand-mark">✦</div>CineScore</div><div class="status"><span id="statusDot" class="dot"></span><span id="statusText">Connecting to model API…</span></div></nav>
+
+  <header class="hero"><div class="eyebrow">Machine Learning · Movie Intelligence</div><h1>Know the score<br>before <span>the credits roll.</span></h1><p>Enter a movie's production profile and CineScore will run the trained Random Forest model to estimate its IMDb-style rating.</p></header>
+
+  <main class="layout">
+    <section class="card">
+      <h2>Movie profile</h2><div class="sub">The inputs below are transformed using the same feature pipeline used when the model was trained.</div>
+      <div class="grid">
+        <div class="field"><label for="budget">BUDGET · USD</label><input class="input" id="budget" type="number" min="0" value="50000000"><span class="hint">Production budget</span></div>
+        <div class="field"><label for="popularity">POPULARITY SCORE</label><input class="input" id="popularity" type="number" min="0" step="0.1" value="20"><span class="hint">TMDB-style popularity</span></div>
+        <div class="field"><label for="runtime">RUNTIME · MINUTES</label><input class="input" id="runtime" type="number" min="0" value="120"><span class="hint">Expected theatrical runtime</span></div>
+        <div class="field"><label for="year">RELEASE YEAR</label><input class="input" id="year" type="number" min="1950" max="2035" value="2024"><span class="hint">Release year</span></div>
+        <div class="field full"><label>GENRES</label><div id="genres" class="genres"></div><span class="hint">Select one or more genres. The model uses its trained genre vocabulary.</span></div>
+        <div class="field full"><label for="cast">TOP CAST · UP TO 3</label><input class="input" id="cast" value="Tom Cruise, Brad Pitt, Will Smith"><span class="hint">Actor names are matched against the bundled training dataset.</span></div>
+        <div class="field full"><label for="director">DIRECTOR</label><input class="input" id="director" value="Christopher Nolan"><span class="hint">Director average is derived from the bundled dataset.</span></div>
+        <div class="field full"><label>LANGUAGE</label><label class="checkrow"><input id="english" type="checkbox" checked> Original language is English</label></div>
+      </div>
+      <div class="actions"><button id="predictBtn" class="btn primary"><span class="normal">✦ Predict rating</span><span class="loader"> Running model</span></button><button id="sampleBtn" class="btn secondary">Random sample</button></div>
+    </section>
+
+    <aside class="card result" id="resultCard">
+      <div class="result-top"><h2>Prediction</h2><span class="badge">Live model</span></div>
+      <div id="emptyState" class="empty"><div><div class="film">◉</div><div>Build a movie profile<br>and run your first prediction.</div></div></div>
+      <div id="resultContent" style="display:none"><div class="score-wrap"><div class="score" id="score">—<small>/10</small></div><div class="stars" id="stars">☆☆☆☆☆</div><div class="rating-label">Predicted IMDb-style rating</div></div><div class="result-line"></div><div class="stats"><div class="stat"><b id="castScore">—</b><span>Cast signal</span></div><div class="stat"><b id="directorScore">—</b><span>Director signal</span></div><div class="stat"><b id="genreCount">—</b><span>Genres used</span></div><div class="stat"><b id="modelType">RF</b><span>Model</span></div></div></div>
+      <div class="section"><div style="font-size:11px;color:#626b79;line-height:1.5">Prediction is an estimate from the existing trained model, not a guaranteed audience or critic score.</div></div>
+    </aside>
+  </main>
+
+  <section class="card section"><h2>What powers CineScore?</h2><div class="sub">A polished web layer around your existing machine-learning project.</div><div class="feature-list"><div class="feature"><strong>01 · Existing model</strong><span>Your supplied Random Forest artifact is loaded directly. No retraining or model modification.</span></div><div class="feature"><strong>02 · Feature pipeline</strong><span>Budget and popularity are log-transformed; cast, director, genre count and language are encoded as before.</span></div><div class="feature"><strong>03 · Local API</strong><span>The frontend talks to a lightweight Python prediction API, so the UI and inference layer are cleanly separated.</span></div></div></section>
+
+  <section class="card section"><h2>Recent predictions</h2><div class="sub">Stored locally in this browser only.</div><div id="history" class="history"><div style="color:#626b79;font-size:12px">No predictions yet.</div></div></section>
+  <footer>CineScore · ML project interface · Model artifacts remain unchanged</footer>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+let genreList = [];
+let selectedGenres = new Set(['Drama','Action']);
+
+async function loadMeta(){
+  try{
+    const r=await fetch('/api/meta'); if(!r.ok) throw new Error(); const m=await r.json();
+    genreList=m.genres; renderGenres();
+    $('statusDot').classList.remove('off'); $('statusText').textContent=`Model online · ${m.dataset_rows.toLocaleString()} movies`;
+  }catch(e){$('statusDot').classList.add('off');$('statusText').textContent='Model API unavailable';}
+}
+function renderGenres(){
+  $('genres').innerHTML=genreList.map(g=>`<button type="button" class="genre ${selectedGenres.has(g)?'active':''}" data-g="${g}">${g}</button>`).join('');
+  document.querySelectorAll('.genre').forEach(b=>b.onclick=()=>{const g=b.dataset.g; selectedGenres.has(g)?selectedGenres.delete(g):selectedGenres.add(g); b.classList.toggle('active');});
+}
+function value(id){return $(id).value}
+function payload(){return {budget:Number(value('budget')),popularity:Number(value('popularity')),runtime:Number(value('runtime')),release_year:Number(value('year')),genres:[...selectedGenres],cast:value('cast'),director:value('director'),is_english:$('english').checked}}
+async function predict(){
+  const btn=$('predictBtn');btn.classList.add('loading');btn.disabled=true;
+  try{
+    const r=await fetch('/api/predict',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload())});
+    const data=await r.json(); if(!r.ok) throw new Error(data.error||'Prediction failed');
+    $('emptyState').style.display='none';$('resultContent').style.display='block';
+    $('score').innerHTML=`${data.prediction.toFixed(1)}<small>/10</small>`;$('stars').textContent=data.stars_text;
+    $('castScore').textContent='Matched';$('directorScore').textContent='Matched';$('genreCount').textContent=data.inputs.genres.length;$('modelType').textContent='Random Forest';
+    addHistory(data); window.scrollTo({top:document.querySelector('.result').offsetTop-20,behavior:'smooth'});
+  }catch(e){alert(e.message)}finally{btn.classList.remove('loading');btn.disabled=false}
+}
+function addHistory(data){
+  const item={score:data.prediction,title:data.inputs.director||'Untitled',genres:data.inputs.genres.slice(0,2).join(' · ')||'No genre'};
+  const arr=JSON.parse(localStorage.getItem('cinescore-history')||'[]');arr.unshift(item);localStorage.setItem('cinescore-history',JSON.stringify(arr.slice(0,6)));renderHistory();
+}
+function renderHistory(){const arr=JSON.parse(localStorage.getItem('cinescore-history')||'[]');$('history').innerHTML=arr.length?arr.map(x=>`<div class="history-item"><div class="name"><b style="color:#dbe0e7;font-size:12px">${escapeHtml(x.title)}</b><br><span style="color:#626b79">${escapeHtml(x.genres)}</span></div><b>${Number(x.score).toFixed(1)}/10</b></div>`).join(''):'<div style="color:#626b79;font-size:12px">No predictions yet.</div>'}
+function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+$('predictBtn').onclick=predict;$('sampleBtn').onclick=()=>{const samples=[{b:150000000,p:80,r:148,y:2023,c:'Leonardo DiCaprio, Tom Hardy, Joseph Gordon-Levitt',d:'Christopher Nolan',g:['Action','Drama','Science Fiction']},{b:30000000,p:42,r:105,y:2021,c:'Ryan Reynolds, Taika Waititi',d:'Shawn Levy',g:['Comedy','Action']},{b:8000000,p:18,r:118,y:2019,c:'Florence Pugh, Jack Reynor',d:'Ari Aster',g:['Horror','Drama']}];const s=samples[Math.floor(Math.random()*samples.length)];$('budget').value=s.b;$('popularity').value=s.p;$('runtime').value=s.r;$('year').value=s.y;$('cast').value=s.c;$('director').value=s.d;selectedGenres=new Set(s.g);renderGenres()};
+renderHistory();loadMeta();
+</script>
+</body>
+</html>
