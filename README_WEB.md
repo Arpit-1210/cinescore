@@ -36,3 +36,14 @@ Example request body:
 ## Important
 
 `movie_rating_model.pkl`, `genre_encoder.pkl`, and `features.pkl` are used as supplied. The old `actor_avg.pkl` and `director_avg.pkl` are not rewritten because they are incompatible with the current pandas pickle loader; the API recreates the same lookup tables from the bundled TMDB CSV files at startup.
+
+## Streamlit version
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+Opens at `http://localhost:8501`. `app.py` reuses `predict()` from `server.py`, so the Streamlit app and the REST API give identical predictions.
+
+Deploy free on [Streamlit Community Cloud](https://share.streamlit.io): New app → repo `Arpit-1210/cinescore`, branch `main`, file `app.py`, Python 3.11.
